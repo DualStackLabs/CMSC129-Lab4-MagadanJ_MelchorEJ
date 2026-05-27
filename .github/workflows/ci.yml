@@ -21,6 +21,15 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+      
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
 
-      - name: Run unit and integration tests
-        run: npx jest --passWithNoTests
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Run integration tests
+        run: npm run test:integration
+
+      - name: Run system tests
+        run: npm run test:system -- --pass-with-no-tests
