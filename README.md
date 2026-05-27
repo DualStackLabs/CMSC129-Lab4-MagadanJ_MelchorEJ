@@ -108,10 +108,12 @@ Deployment will be configured to proceed only after the test workflow passes.
 ### Red Phase Evidence
 
 ![Failing unit Red CI run](docs/screenshots/ci/failed/unit.png)
+![Failing integration Red CI run](docs/screenshots/ci/failed/integration.png)
 
 ### Green Phase Evidence
 
 ![Passing unit Green CI run](docs/screenshots/ci/passed/unit.png)
+![Passing integration Green CI run](docs/screenshots/ci/passed/integration.png)
 
 - Final passing pipeline screenshot: To be added.
 
@@ -119,8 +121,8 @@ Deployment will be configured to proceed only after the test workflow passes.
 ### Unit Test Results
 ![Passing unit tests](docs/screenshots/unit-tests/passed.png)
 
-2. Integration Test Results
-Screenshot of passing integration tests: To be added after Part 2.
+### Integration Test Results
+![Passing integration tests](docs/screenshots/integration-tests/passed.png)
 
 3. System Test Results
 Screenshot of passing system tests: To be added after Part 3.
