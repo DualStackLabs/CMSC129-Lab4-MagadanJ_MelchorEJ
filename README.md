@@ -105,13 +105,19 @@ Red-phase commits are expected to show failing workflow runs because the tests a
 Deployment will be configured to proceed only after the test workflow passes.
 
 ### CI/CD Evidence
-- Failing Red-phase pipeline screenshot: To be added.
-- Passing Green-phase pipeline screenshot: To be added.
+### Red Phase Evidence
+
+![Failing unit Red CI run](docs/screenshots/ci/failed/unit.png)
+
+### Green Phase Evidence
+
+![Passing unit Green CI run](docs/screenshots/ci/passed/unit.png)
+
 - Final passing pipeline screenshot: To be added.
 
 ## Test Results
-1. Unit Test Results
-Screenshot of passing unit tests: To be added after Part 1.
+### Unit Test Results
+![Passing unit tests](docs/screenshots/unit-tests/passed.png)
 
 2. Integration Test Results
 Screenshot of passing integration tests: To be added after Part 2.
