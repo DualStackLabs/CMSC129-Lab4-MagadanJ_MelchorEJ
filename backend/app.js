@@ -1,5 +1,6 @@
 const express = require("express");
 const { validateDeadline } = require("../frontend/src/deadlineValidation");
+const { createDeadline, listDeadlines } = require("./deadlineStore");
 
 const app = express();
 
@@ -12,16 +13,7 @@ app.post("/deadlines", (req, res) => {
   try {
     validateDeadline(req.body);
 
-    const deadline = {
-      id: nextId,
-      title: req.body.title,
-      course: req.body.course,
-      dueDate: req.body.dueDate,
-      priority: req.body.priority,
-    };
-
-    deadlines.push(deadline);
-    nextId += 1;
+    const deadline = createDeadline(req.body);
 
     return res.status(201).json(deadline);
   } catch (error) {
@@ -30,7 +22,7 @@ app.post("/deadlines", (req, res) => {
 });
 
 app.get("/deadlines", (req, res) => {
-  return res.status(200).json(deadlines);
+  return res.status(200).json(listDeadlines());
 });
 
 module.exports = app;
