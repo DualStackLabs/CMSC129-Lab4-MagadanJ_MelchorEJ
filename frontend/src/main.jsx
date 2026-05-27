@@ -77,9 +77,17 @@ function App() {
 
   return (
     <main>
-      <h1>Cutoff</h1>
+      <header className="page-header">
+        <div>
+          <p className="eyebrow">Coursework deadline tracker</p>
+          <h1>Cutoff</h1>
+          <p className="header-copy">
+            Keep upcoming requirements visible, prioritized, and out of the danger zone.
+          </p>
+        </div>
+      </header>
 
-      <form onSubmit={submitDeadline}>
+       <form className="deadline-form" onSubmit={submitDeadline}>
         <label>
           Title
           <input name="title" required value={form.title} onChange={updateField} />
@@ -110,37 +118,63 @@ function App() {
           </select>
         </label>
 
-        {error && <p role="alert">{error}</p>}
-
+        {error && (
+          <p role="alert" className="error-message">
+            {error}
+          </p>
+        )}
 
         <button type="submit">
           {editingId ? "Save changes" : "Add deadline"}
         </button>
       </form>
 
-      <section>
+      <section className="deadline-list">
         {deadlines.map((deadline) => (
-          <article key={deadline.id}>
-            <h2>{deadline.title}</h2>
-            <p>{deadline.course}</p>
-            <p>{deadline.dueDate}</p>
-            <p>{deadline.priority}</p>
+          <article
+            key={deadline.id}
+            className={`deadline-card priority-${deadline.priority}`}
+          >
+            <div className="deadline-details">
+              <h2>{deadline.title}</h2>
 
-            <button
-              type="button"
-              onClick={() => startEdit(deadline)}
-              aria-label={`Edit ${deadline.title}`}
-            >
-              Edit
-            </button>
+              <dl>
+                <div>
+                  <dt>Course: </dt>
+                  <dd>{deadline.course}</dd>
+                </div>
 
-            <button
-              type="button"
-              onClick={() => removeDeadline(deadline)}
-              aria-label={`Delete ${deadline.title}`}
-            >
-              Delete
+                <div>
+                  <dt>Due date: </dt>
+                  <dd>{deadline.dueDate}</dd>
+                </div>
+
+                <div>
+                  <dt>Priority: </dt>
+                  <dd>
+                    <span className="priority">{deadline.priority}</span>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="card-actions">
+              <button
+                type="button"
+                onClick={() => startEdit(deadline)}
+                aria-label={`Edit ${deadline.title}`}
+              >
+                Edit
+              </button>
+
+              <button
+                type="button"
+                onClick={() => removeDeadline(deadline)}
+                aria-label={`Delete ${deadline.title}`}
+              >
+                Delete
             </button>
+            </div>
           </article>
         ))}
       </section>
