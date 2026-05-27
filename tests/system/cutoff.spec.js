@@ -16,7 +16,11 @@ test.describe("Cutoff user stories", () => {
 
     await expect(page.getByText("System Test Add Deadline")).toBeVisible();
     await expect(page.getByText("CMSC 129")).toBeVisible();
-    await expect(page.getByText("high")).toBeVisible();
+    await expect(page
+            .getByRole("article")
+            .filter({ hasText: "System Test Add Deadline" })
+            .getByText("high", { exact: true }),
+        ).toBeVisible();
   });
 
   test("User Story 2: student can edit a coursework deadline", async ({ page }) => {

@@ -20,4 +20,26 @@ function listDeadlines() {
   return deadlines;
 }
 
-module.exports = { createDeadline, listDeadlines };
+function updateDeadline(id, data) {
+  const deadline = deadlines.find((item) => item.id === Number(id));
+
+  if (!deadline) {
+    return null;
+  }
+
+  deadline.title = data.title;
+  deadline.course = data.course;
+  deadline.dueDate = data.dueDate;
+  deadline.priority = data.priority;
+
+  return deadline;
+}
+
+function deleteDeadline(id) {
+  const originalLength = deadlines.length;
+  deadlines = deadlines.filter((item) => item.id !== Number(id));
+
+  return deadlines.length < originalLength;
+}
+
+module.exports = { createDeadline, listDeadlines, updateDeadline, deleteDeadline,};
