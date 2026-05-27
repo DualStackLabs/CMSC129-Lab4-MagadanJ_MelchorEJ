@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -15,12 +15,6 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
 
-  async function loadDeadlines() {
-    const response = await fetch("/deadlines");
-    const data = await response.json();
-    setDeadlines(data);
-  }
-
   function updateField(event) {
     setForm({
       ...form,
@@ -29,47 +23,47 @@ function App() {
   }
 
   async function submitDeadline(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  const method = editingId ? "PUT" : "POST";
-  const url = editingId ? `/deadlines/${editingId}` : "/deadlines";
-  
-  const response = await fetch(url, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
+    const method = editingId ? "PUT" : "POST";
+    const url = editingId ? `/deadlines/${editingId}` : "/deadlines";
+    
+    const response = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-  const savedDeadline = await response.json();
+    const savedDeadline = await response.json();
 
-  if (!response.ok) {
-    setError(savedDeadline.error);
-    return;
+    if (!response.ok) {
+      setError(savedDeadline.error);
+      return;
+    }
+
+    setError("");
+
+    if (editingId) {
+      setDeadlines(
+        deadlines.map((deadline) =>
+          deadline.id === editingId ? savedDeadline : deadline,
+        ),
+      );
+    } else {
+      setDeadlines([...deadlines, savedDeadline]);
+    }
+
+    setForm(emptyForm);
+    setEditingId(null);
   }
 
-  setError("");
+  async function removeDeadline(deadlineToRemove) {
+    await fetch(`/deadlines/${deadlineToRemove.id}`, { method: "DELETE" });
 
-  if (editingId) {
     setDeadlines(
-      deadlines.map((deadline) =>
-        deadline.id === editingId ? savedDeadline : deadline,
-      ),
+      deadlines.filter((deadline) => deadline.id !== deadlineToRemove.id),
     );
-  } else {
-    setDeadlines([...deadlines, savedDeadline]);
   }
-
-  setForm(emptyForm);
-  setEditingId(null);
-}
-
-async function removeDeadline(deadlineToRemove) {
-  await fetch(`/deadlines/${deadlineToRemove.id}`, { method: "DELETE" });
-
-  setDeadlines(
-    deadlines.filter((deadline) => deadline.id !== deadlineToRemove.id),
-  );
-}
 
   function startEdit(deadline) {
     setEditingId(deadline.id);
@@ -101,6 +95,7 @@ async function removeDeadline(deadlineToRemove) {
           <input
             name="dueDate"
             type="date"
+            required
             value={form.dueDate}
             onChange={updateField}
           />

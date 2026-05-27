@@ -39,7 +39,7 @@ function deleteDeadline(id) {
   const originalLength = deadlines.length;
   deadlines = deadlines.filter((item) => item.id !== Number(id));
 
-  return deadlines.length < originalLength;
+return deadlines.length < originalLength;
 }
 
 module.exports = { createDeadline, listDeadlines, updateDeadline, deleteDeadline,};

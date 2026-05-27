@@ -6,9 +6,6 @@ const app = express();
 
 app.use(express.json());
 
-let deadlines = [];
-let nextId = 1;
-
 app.post("/deadlines", (req, res) => {
   try {
     validateDeadline(req.body);
