@@ -13,6 +13,7 @@ function App() {
   const [deadlines, setDeadlines] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
+  const [error, setError] = useState("");
 
   async function loadDeadlines() {
     const response = await fetch("/deadlines");
@@ -32,7 +33,7 @@ function App() {
 
   const method = editingId ? "PUT" : "POST";
   const url = editingId ? `/deadlines/${editingId}` : "/deadlines";
-
+  
   const response = await fetch(url, {
     method,
     headers: { "Content-Type": "application/json" },
@@ -40,6 +41,13 @@ function App() {
   });
 
   const savedDeadline = await response.json();
+
+  if (!response.ok) {
+    setError(savedDeadline.error);
+    return;
+  }
+
+  setError("");
 
   if (editingId) {
     setDeadlines(
@@ -80,12 +88,12 @@ async function removeDeadline(deadlineToRemove) {
       <form onSubmit={submitDeadline}>
         <label>
           Title
-          <input name="title" value={form.title} onChange={updateField} />
+          <input name="title" required value={form.title} onChange={updateField} />
         </label>
 
         <label>
           Course
-          <input name="course" value={form.course} onChange={updateField} />
+          <input name="course" required value={form.course} onChange={updateField} />
         </label>
 
         <label>
@@ -106,6 +114,9 @@ async function removeDeadline(deadlineToRemove) {
             <option value="high">High</option>
           </select>
         </label>
+
+        {error && <p role="alert">{error}</p>}
+
 
         <button type="submit">
           {editingId ? "Save changes" : "Add deadline"}
