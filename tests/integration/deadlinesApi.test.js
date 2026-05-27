@@ -22,9 +22,9 @@ describe("Deadlines API", () => {
 
   test("GET /deadlines returns created deadlines", async () => {
     await request(app).post("/deadlines").send({
-      title: "Project Proposal",
+      title: "Final SRS Document",
       course: "CMSC 129",
-      dueDate: "2026-06-05",
+      dueDate: "2026-05-29",
       priority: "medium",
     });
 
